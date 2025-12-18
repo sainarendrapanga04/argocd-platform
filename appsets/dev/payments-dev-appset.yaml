@@ -7,9 +7,9 @@ spec:
   generators:
     - list:
         elements:
-          - appName: payments
+          - appName: guestbook
             namespace: payments-dev
-            path: services/app
+            path: guestbook
 
   template:
     metadata:
@@ -18,7 +18,7 @@ spec:
       project: payments-project
 
       source:
-        repoURL: https://github.com/sainarendrapanga04/app-gitops.git
+        repoURL: https://github.com/sainarendrapanga04/argocd-example-apps.git
         targetRevision: main
         path: '{{path}}'
 
