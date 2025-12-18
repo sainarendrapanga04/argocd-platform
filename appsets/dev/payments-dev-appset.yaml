@@ -5,29 +5,30 @@ metadata:
   namespace: argocd
 spec:
   generators:
-    - git:
-        repoURL: https://github.com/sainarendrapanga04/app-gitops.git
-        revision: main
-        directories:
-          - path: services/app   # 👈 exact path from your repo
+    - list:
+        elements:
+          - appName: payments
+            namespace: payments-dev
+            path: services/app
 
   template:
     metadata:
-      name: app-dev              # 👈 application name in Argo CD
+      name: '{{appName}}-dev'
     spec:
       project: payments-project
 
       source:
         repoURL: https://github.com/sainarendrapanga04/app-gitops.git
         targetRevision: main
-        path: services/app
-        kustomize: {}            # 👈 tells Argo CD to use kustomization.yaml
+        path: '{{path}}'
 
       destination:
         server: https://kubernetes.default.svc
-        namespace: payments-dev
+        namespace: '{{namespace}}'
 
       syncPolicy:
         automated:
           prune: true
           selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
