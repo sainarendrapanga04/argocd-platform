@@ -4,27 +4,31 @@ metadata:
   name: payments-project
   namespace: argocd
 spec:
-  description: Payments application project (managed by platform-root)
+  description: Payments application project (dev, staging, prod)
 
-  # Git repositories allowed for applications in this project
+  # ---- Allowed Git repositories for payments apps ----
   sourceRepos:
     - https://github.com/sainarendrapanga04/app-gitops.git
 
-  # Allowed deployment destinations
+  # ---- Allowed deployment destinations ----
   destinations:
+    # Dev
     - server: https://kubernetes.default.svc
       namespace: payments-dev
+
+    # Staging
     - server: https://kubernetes.default.svc
       namespace: payments-stg
+
+    # Prod
     - server: https://kubernetes.default.svc
       namespace: payments-prod
 
-  # Allow deploying all Kubernetes resources (tighten later if needed)
+  # ---- What Kubernetes resources are allowed ----
   clusterResourceWhitelist:
     - group: "*"
       kind: "*"
 
-  # Optional: allow all namespaced resources
   namespaceResourceWhitelist:
     - group: "*"
       kind: "*"
